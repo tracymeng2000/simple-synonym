@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +14,7 @@ const styles = {
   },
   appBar: {
     backgroundColor: '#F6AB3F',
+    width: '100%'
   },
   title: {
     flexGrow: 1,
@@ -22,15 +23,15 @@ const styles = {
     fontWeight: 'bold'
   },
   loginButton: {
-      color: '#FFFFFF'
+    color: '#FFFFFF'
   },
   menuButton: {
-      color: '#FFFFFF'
+    color: '#FFFFFF'
   }
 };
 
 class Navigation extends Component {
-  render(){
+  render() {
     const classes = this.props.classes;
 
     return (

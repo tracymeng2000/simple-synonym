@@ -9,8 +9,7 @@ function App() {
   return (
     <div className="App">
       <Layout>
-        {/* <Route path="/" exact component={} /> */}
-        <Editor />
+        <Route path="/" exact component={Editor} />
       </Layout>
     </div>
   );

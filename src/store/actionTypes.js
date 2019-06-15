@@ -1,0 +1,1 @@
+export const GENERATE_WORD_LIST = 'GENERATE_WORD_LIST';
