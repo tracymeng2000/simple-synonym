@@ -3,15 +3,11 @@ import { withStyles } from '@material-ui/styles';
 import Chip from '@material-ui/core/Chip';
 
 const styles = {
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-    },
     chip: {
         margin: 'auto',
         color: '#FFFFFF',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        margin: '5px 5px 5px 5px',
     },
     chipSafe: {
         backgroundColor: '#51F39F',

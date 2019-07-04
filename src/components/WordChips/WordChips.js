@@ -8,7 +8,7 @@ class WordChips extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{display: 'flex', flexWrap: 'wrap'}}>
                 {this.props.wordList.map((item, i) => {
                     return <WordChip frequency={item.frequency} word={item.word} key={i} />
                 })}

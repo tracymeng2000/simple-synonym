@@ -3,6 +3,7 @@ import * as actionTypes from '../actionTypes';
 //where the order is sorted according to decreasing frequencies
 
 const initialState = {
+    userInput: '',
     wordList: [],
     caseSensitive: false,
 };
@@ -23,19 +24,19 @@ const generateWordList = (input) => {
     const frequencies= Object.values(wordListObject);
     let updatedWordList = words.map((word, i) => ({word: word, frequency: frequencies[i]}));
     updatedWordList.sort((a, b) => b.frequency - a.frequency);
-    console.log(updatedWordList)
     return updatedWordList;
 }
 
+
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case actionTypes.GENERATE_WORD_LIST:
+        case actionTypes.STORE_USER_INPUT:
             const updatedWordList = generateWordList(action.input);
             return{
                 ...state,
-                wordList: updatedWordList
+                wordList: updatedWordList,
+                userInput: action.input
             };
-            
         default: 
             return state
     }

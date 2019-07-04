@@ -10,17 +10,18 @@ import { withStyles } from '@material-ui/styles';
 
 const styles = {
   root: {
-    flexGrow: 1,
+    width: '100%'
   },
   appBar: {
-    backgroundColor: '#F6AB3F',
+    backgroundColor: '#a1d13b',
     width: '100%'
   },
   title: {
     flexGrow: 1,
     color: '#FFFFFF',
     fontFamily: 'Shadows Into Light, cursive',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    margin: 'auto'
   },
   loginButton: {
     color: '#FFFFFF'
@@ -40,7 +41,7 @@ class Navigation extends Component {
           <Toolbar>
             {/* <img src={logo} style={{height: '80px', width: '80px'}}/> */}
             <Typography variant="h6" className={classes.title}>
-              SwitchSimple
+              Synple
             </Typography>
             <Button className={classes.loginButton}>Login</Button>
           </Toolbar>
