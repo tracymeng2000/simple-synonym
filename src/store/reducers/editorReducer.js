@@ -6,6 +6,8 @@ const initialState = {
     userInput: '',
     wordList: [],
     caseSensitive: false,
+    wordOnFocus: [],
+    textEditable: true
 };
 
 const generateWordList = (input) => {
@@ -37,6 +39,16 @@ const reducer = (state = initialState, action) => {
                 wordList: updatedWordList,
                 userInput: action.input
             };
+        case actionTypes.UPDATE_WORD_ON_FOCUS:
+            return{
+                ...state,
+                wordOnFocus: action.wordOnFocus
+            };
+        case actionTypes.TOGGLE_TEXT_EDITABLE:
+            return{
+                ...state,
+                textEditable: !state.textEditable
+            }
         default: 
             return state
     }

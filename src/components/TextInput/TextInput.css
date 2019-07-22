@@ -1,10 +1,11 @@
-.form{
+.contentWrap{
 	margin-top: 24px;
 	display: flex;
 	justify-content: center;
 	margin-bottom: 20px;
 }
-.TextArea{
+.contentArea{
+	display: block;
 	background-color: #f2fae1;
 	font-family: 'Courier New', Courier, monospace;
 	font-size: 16px;

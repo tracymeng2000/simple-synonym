@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
+import { connect } from 'react-redux';
+
 import Chip from '@material-ui/core/Chip';
+import * as actionTypes from '../../../store/actionTypes';
 
 const styles = {
     chip: {
-        margin: 'auto',
         color: '#FFFFFF',
         fontWeight: 'bold',
         margin: '5px 5px 5px 5px',
@@ -36,12 +38,20 @@ class wordChip extends Component {
         return (this.props.word + '(' + this.props.frequency + ')');
     }
 
+    handleChipClick = (wordOnFocus) => {
+        let updatedWordOnFocus = [];
+        updatedWordOnFocus.push(wordOnFocus);
+        this.props.updateWordOnFocus(updatedWordOnFocus);
+        if(this.props.textEditable){
+            this.props.toggleTextEditable();
+        }
+    }
     render() {
         const classes = this.props.classes;
         return (
             <Chip
                 clickable
-                // avatar={<Avatar>{props.avatar}</Avatar>}
+                onClick= {() => this.handleChipClick(this.props.word)}
                 label={this.getLabel()}
                 className={[classes.chip, this.getChipClass()].join(' ')}
             />
@@ -49,4 +59,17 @@ class wordChip extends Component {
     }
 }
 
-export default withStyles(styles)(wordChip);
+const mapStateToProps = (state) => {
+    return {
+        textEditable : state.textEditable
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateWordOnFocus: (wordOnFocus) => dispatch({ type: actionTypes.UPDATE_WORD_ON_FOCUS, wordOnFocus: wordOnFocus }),
+        toggleTextEditable: () => dispatch({type: actionTypes.TOGGLE_TEXT_EDITABLE}),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(wordChip));
