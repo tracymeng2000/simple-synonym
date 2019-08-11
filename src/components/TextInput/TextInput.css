@@ -1,26 +1,18 @@
-.contentWrap{
-	margin-top: 24px;
+.contentWrapper{
 	display: flex;
-	justify-content: center;
-	margin-bottom: 20px;
+	justify-content: flex-start;
+	height: 90%;
+	width: 100%;
 }
 .contentArea{
-	display: block;
 	background-color: #f2fae1;
-	font-family: 'Courier New', Courier, monospace;
-	font-size: 16px;
+	font-size: 18px;
 	width: 100%;
-	padding: 24px 24px 24px 24px;
-	height: 750px;
-	margin-left: auto;
-	margin-right: auto;
+	padding: 24px;
 	border: none;
 	outline: none;
 	margin: 0;
-}
-
-@media (max-height: 800px){
-    .TextArea{
-        height: 500px;
-    }
+	overflow-y: auto;
+	resize: none;
+	color: #747D8C;
 }

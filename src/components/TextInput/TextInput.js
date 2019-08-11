@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import Highlighter from 'react-highlight-words';
 import * as actionTypes from '../../store/actionTypes';
 import classes from './TextInput.css';
+import Aux from '../../hoc/Aux/Aux';
+import {colors} from '../../utility/Constants';
 
 class TextInput extends Component {
 
@@ -10,20 +12,52 @@ class TextInput extends Component {
         this.props.storeUserInput(event.target.value)
     }
 
-    componentWillUnmount() { 
-        this.contentAreaRef.removeEventListener('input');
+    findChunksAtDifferentWord = (searchWords, textToHighlight) => {
+        const chunks = [];
+
+        const singleTextWords = textToHighlight.split(/[/.\s!,.()]/g);
+        let fromIndex = 0;
+        const singleTextWordsWithPos = singleTextWords.map(s => {
+            const indexInWord = textToHighlight.indexOf(s, fromIndex);
+            fromIndex = indexInWord + s.length;
+            return {
+                word: s,
+                index: indexInWord
+            };
+        });
+
+        searchWords.forEach(sw => {
+            singleTextWordsWithPos.forEach(s => {
+              if (s.word === sw) {
+                const start = s.index;
+                const end = s.index + sw.length;
+                chunks.push({
+                  start,
+                  end
+                });
+              }})});
+        return chunks;
     }
+
     render() {
-        console.log(this.props.wordOnFocus)
         return (
-            <div>
-            <form className={classes.contentWrapper} style={this.props.textEditable? null : {display: 'none'}}>
-                <textarea className={classes.contentArea} onChange={this.handleChange}/>
-            </form>
-            <div className={classes.contentArea} style={this.props.textEditable? {display: 'none'} : null} onClick={this.props.toggleTextEditable}>
-                <Highlighter textToHighlight={this.props.textToHighlight} searchWords={this.props.wordOnFocus} />
-            </div>
-            </div>
+            <Aux>
+                <form className={classes.contentWrapper} style={this.props.textEditable? null : {display: 'none'}}>
+                    <textarea  
+                        placeholder={'start typing here'}
+                        className={classes.contentArea} 
+                        onChange={this.handleChange}/>
+                </form>
+                <div className={classes.contentWrapper} style={this.props.textEditable? {display: 'none'} : null}>
+                    <div className={classes.contentArea} onClick={this.props.toggleTextEditable}>
+                        <Highlighter 
+                            textToHighlight={this.props.textToHighlight} 
+                            style={{whiteSpace: 'pre-wrap'}} 
+                            findChunks={() => this.findChunksAtDifferentWord(new Array(this.props.wordOnFocus), this.props.textToHighlight)}
+                            highlightStyle={{backgroundColor: colors.yellow}} searchWords={new Array(this.props.wordOnFocus)} />
+                    </div>
+                </div>
+            </Aux>
             
         );
     }

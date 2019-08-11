@@ -6,6 +6,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #F1F2F6;
+}
+
+html, body, main{
+  height: 100vh;
 }
 
 code {

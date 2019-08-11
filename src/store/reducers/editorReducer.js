@@ -6,8 +6,9 @@ const initialState = {
     userInput: '',
     wordList: [],
     caseSensitive: false,
-    wordOnFocus: [],
-    textEditable: true
+    wordOnFocus: '',
+    textEditable: true,
+    dialogInfo: {open: false, components: []}
 };
 
 const generateWordList = (input) => {
@@ -48,6 +49,12 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 textEditable: !state.textEditable
+            }
+        case actionTypes.UPDATE_DIALOG_INFO:
+            console.log(action.updatedDialogInfo);
+            return {
+                ...state,
+                dialogInfo: action.updatedDialogInfo
             }
         default: 
             return state
