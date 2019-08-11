@@ -5,7 +5,8 @@ import uploadDocument from '../../assets/images/uploadDocument.png';
 import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actionTypes';
-import {colors, COMPONENT_TYPE} from '../../utility/Constants';
+import {colors} from '../../utility/Constants';
+import {settingDialog} from '../RenderableComponentData/RenderableComponentData';
 
 const styles = {
   root: {
@@ -37,13 +38,10 @@ class Navigation extends Component {
   handleSettingIconClick = () => {
     this.props.updateDialogInfo({
       open: true, 
-      components: [
-        {type: COMPONENT_TYPE.FORM_CONTROL_LABEL, 
-         config: {controlType: COMPONENT_TYPE.SWITCH, label: 'Case Sensitive'}},
-        {type: COMPONENT_TYPE.FORM_CONTROL_LABEL,
-         config: {controlType: COMPONENT_TYPE.SWITCH, label: 'Common Word Check'}}
-      ]});
+      dialogTitle: 'Setting',
+      components: settingDialog});
   }
+
   render(){
     const classes = this.props.classes;
 

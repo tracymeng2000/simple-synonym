@@ -7,7 +7,7 @@ export const colors = {
     white: '#ffffff',
     yellow: '#eccc68',
     black: '#000000',
-    bayWharf: '#747d8c'
+    bayWharf: '#747d8c',
 }
 
 export const COMPONENT_TYPE = {
@@ -15,4 +15,10 @@ export const COMPONENT_TYPE = {
     SWITCH: 'switch',
     TEXT: 'text',
     BUTTON: 'button'
+}
+
+export const ID = {
+    CASE_SENSITIVE: 'caseSensitive',
+    COMMON_WORD: 'commonWord',
+    APPLY_SETTING: 'applySetting'
 }

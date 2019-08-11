@@ -6,12 +6,14 @@ const initialState = {
     userInput: '',
     wordList: [],
     caseSensitive: false,
+    commonWordFilter: true,
     wordOnFocus: '',
     textEditable: true,
-    dialogInfo: {open: false, components: []}
+    dialogInfo: {open: false, dialogTitle: '', components: []}
 };
 
-const generateWordList = (input) => {
+const generateWordList = (input, caseSensitive) => {
+    if(!caseSensitive) input = input.toLowerCase();
     let inputWords = input.split(/[/.\s!,.()]/g);
     inputWords = inputWords.filter(x => x!== '');
     let wordListObject = {};
@@ -34,10 +36,9 @@ const generateWordList = (input) => {
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.STORE_USER_INPUT:
-            const updatedWordList = generateWordList(action.input);
             return{
                 ...state,
-                wordList: updatedWordList,
+                wordList: generateWordList(action.input, state.caseSensitive),
                 userInput: action.input
             };
         case actionTypes.UPDATE_WORD_ON_FOCUS:
@@ -55,6 +56,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 dialogInfo: action.updatedDialogInfo
+            }
+        case actionTypes.TOGGLE_CASE_SENSITIVE:
+            return{
+                ...state,
+                wordList: generateWordList(state.userInput, action.caseSensitiveOn),
+                caseSensitive: action.caseSensitiveOn
             }
         default: 
             return state

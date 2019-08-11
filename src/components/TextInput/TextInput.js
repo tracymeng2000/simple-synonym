@@ -14,8 +14,8 @@ class TextInput extends Component {
 
     findChunksAtDifferentWord = (searchWords, textToHighlight) => {
         const chunks = [];
-
         const singleTextWords = textToHighlight.split(/[/.\s!,.()]/g);
+        
         let fromIndex = 0;
         const singleTextWordsWithPos = singleTextWords.map(s => {
             const indexInWord = textToHighlight.indexOf(s, fromIndex);
@@ -28,7 +28,7 @@ class TextInput extends Component {
 
         searchWords.forEach(sw => {
             singleTextWordsWithPos.forEach(s => {
-              if (s.word === sw) {
+              if (s.word === sw || (!this.props.caseSensitive && s.word.toLowerCase() === sw.toLowerCase())) {
                 const start = s.index;
                 const end = s.index + sw.length;
                 chunks.push({
@@ -68,6 +68,7 @@ const mapStateToProps = state => {
         textEditable: state.textEditable,
         wordOnFocus: state.wordOnFocus,
         textToHighlight: state.userInput,
+        caseSensitive: state.caseSensitive
     }
 }
 

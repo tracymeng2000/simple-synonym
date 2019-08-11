@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../../store/actionTypes';
-import { Paper, Icon, List, ListItem, ListItemText, Button, IconButton } from '@material-ui/core';
+import { Paper, Icon, List, ListItem, ListItemText } from '@material-ui/core';
 import {colors} from '../../../utility/Constants';
 import {UnfoldMore} from '@material-ui/icons';
 import {words} from '../../../assets/data/wordData';
@@ -69,11 +69,12 @@ class wordChip extends Component {
         return (
             <Paper
                 className={classes.card}
+                onClick={() => this.handleIconClick(this.props.word, this.props.index)}
             >
                 <span style={{lineHeight: '50px'}} className={this.getTextClass()}>{this.getLabel()}</span>
-                <IconButton style={{padding: '13px 0', float: 'right'}} onClick={() => this.handleIconClick(this.props.word, this.props.index)}>
+                <Icon style={{padding: '13px 0', float: 'right'}}>
                     <UnfoldMore/>
-                </IconButton>
+                </Icon>
                 {
                     this.props.expanded?
                         <List className={classes.list}>
