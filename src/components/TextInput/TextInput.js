@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Highlighter from 'react-highlight-words';
-import * as actionTypes from '../../store/actionTypes';
+import * as actionCreators from '../../store/actions/index';
 import classes from './TextInput.css';
 import Aux from '../../hoc/Aux/Aux';
 import {colors} from '../../utility/Constants';
@@ -28,7 +28,7 @@ class TextInput extends Component {
 
         searchWords.forEach(sw => {
             singleTextWordsWithPos.forEach(s => {
-              if (s.word === sw || (!this.props.caseSensitive && s.word.toLowerCase() === sw.toLowerCase())) {
+              if (s.word === sw || (!this.props.setting.caseSensitive && s.word.toLowerCase() === sw.toLowerCase())) {
                 const start = s.index;
                 const end = s.index + sw.length;
                 chunks.push({
@@ -65,17 +65,17 @@ class TextInput extends Component {
 
 const mapStateToProps = state => {
     return {
-        textEditable: state.textEditable,
-        wordOnFocus: state.wordOnFocus,
-        textToHighlight: state.userInput,
-        caseSensitive: state.caseSensitive
+        textEditable: state.editor.textEditable,
+        wordOnFocus: state.editor.wordOnFocus,
+        textToHighlight: state.editor.userInput,
+        setting: state.editor.setting
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        storeUserInput: (input) => dispatch({ type: actionTypes.STORE_USER_INPUT, input: input }),
-        toggleTextEditable: () => dispatch({type: actionTypes.TOGGLE_TEXT_EDITABLE})
+        storeUserInput: (input) => dispatch(actionCreators.storeUserInput(input)),
+        toggleTextEditable: () => dispatch(actionCreators.toggleTextEditable())
     }
 }
 

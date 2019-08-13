@@ -3,17 +3,7 @@ import { connect } from 'react-redux';
 
 import WordChip from './WordChip/WordChip';
 
-
 class WordChips extends Component {
-    state = {
-        indexToExpand: -1
-    }
-
-    updateIndexToExpand = (newIndex) => {
-        this.setState({
-            indexToExpand: newIndex
-        });
-    }
 
     render() {
         return (
@@ -23,9 +13,7 @@ class WordChips extends Component {
                         <WordChip 
                             frequency={item.frequency} 
                             word={item.word} key={i} 
-                            index={i}
-                            expanded={this.state.indexToExpand === i}
-                            updateIndexToExpand={this.updateIndexToExpand}/>
+                            index={i}/>
                     </li>
                 ))}
             </ul>
@@ -35,7 +23,7 @@ class WordChips extends Component {
 
 const mapStateToProps = state => {
     return ({
-        wordList: state.wordList,
+        wordList: state.editor.wordList,
     });
 }
 

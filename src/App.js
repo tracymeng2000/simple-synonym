@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import * as Constants from './utility/Constants';
 // import logo from './assets/images/logoTrans.png';
 import Layout from './hoc/Layout/Layout';
 import InputPage from './container/InputPage/InputPage';

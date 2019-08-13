@@ -4,7 +4,7 @@ import settingIcon from '../../assets/images/settingIcon.png';
 import uploadDocument from '../../assets/images/uploadDocument.png';
 import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actionTypes';
+import * as actionCreators from '../../store/actions/index';
 import {colors} from '../../utility/Constants';
 import {settingDialog} from '../RenderableComponentData/RenderableComponentData';
 
@@ -67,7 +67,7 @@ class Navigation extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      updateDialogInfo: (updatedDialogInfo) => dispatch({ type: actionTypes.UPDATE_DIALOG_INFO, updatedDialogInfo: updatedDialogInfo})
+      updateDialogInfo: (updatedDialogInfo) => dispatch(actionCreators.updateDialogInfo(updatedDialogInfo)),
   }
 }
 

@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Dialog, FormControlLabel, DialogTitle, DialogContent, DialogActions, Button} from '@material-ui/core';
 import {COMPONENT_TYPE, ID, colors} from '../../utility/Constants';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actionTypes';
-import BlueSwitch from './renderableComponents/BlueSwitch';
+import * as actionCreators from '../../store/actions/index';
+import BlueSwitch from '../common/renderableComponents/BlueSwitch';
 
 
 class GeneralDialog extends Component{
@@ -13,7 +13,7 @@ class GeneralDialog extends Component{
     }
 
     componentDidUpdate = (prevProps) => {
-        if(prevProps.open !== this.props.open && this.props.open){
+        if(prevProps.dialogInfo.open !== this.props.dialogInfo.open && this.props.dialogInfo.open){
             this.setState({
                 caseSensitive: this.props.caseSensitive,
                 commonWordFilter: this.props.commonWordFilter
@@ -44,7 +44,10 @@ class GeneralDialog extends Component{
 
     handleButtonClick = (id) => {
         if(id === ID.APPLY_SETTING){
-            this.props.updateCaseSensitiveSetting(this.state.caseSensitive);
+            this.props.updateSetting({
+                caseSensitive: this.state.caseSensitive,
+                commonWordFilter: this.state.commonWordFilter
+            });
             this.handleClose();
         }
     }
@@ -119,16 +122,16 @@ class GeneralDialog extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        dialogInfo : state.dialogInfo,
-        caseSensitive: state.caseSensitive,
-        commonWordFilter: state.commonWordFilter
+        dialogInfo : state.editor.dialogInfo,
+        caseSensitive: state.editor.setting.caseSensitive,
+        commonWordFilter: state.editor.setting.commonWordFilter
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateDialogInfo: (updatedDialogInfo) => dispatch({ type: actionTypes.UPDATE_DIALOG_INFO, updatedDialogInfo: updatedDialogInfo}),
-        updateCaseSensitiveSetting: (caseSensitiveOn) => dispatch({type: actionTypes.TOGGLE_CASE_SENSITIVE, caseSensitiveOn: caseSensitiveOn})
+        updateDialogInfo: (updatedDialogInfo) => dispatch(actionCreators.updateDialogInfo(updatedDialogInfo)),
+        updateSetting: (updatedSetting) => dispatch(actionCreators.updateSetting(updatedSetting))
     }
 }
 

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../../store/actionTypes';
-import { Paper, Icon, List, ListItem, ListItemText } from '@material-ui/core';
+import * as actionCreators from '../../../store/actions/index';
+import { Paper, Icon, List, ListItem, ListItemText, Tooltip } from '@material-ui/core';
 import {colors} from '../../../utility/Constants';
 import {UnfoldMore} from '@material-ui/icons';
-import {words} from '../../../assets/data/wordData';
+import Aux from '../../../hoc/Aux/Aux';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const styles = {
     card: {
@@ -29,17 +30,21 @@ const styles = {
         height: '198px',
         boxShadow: 'inset 2px 4px 4px rgba(0, 0, 0, 0.25)',
         overflowY: 'scroll',
-        fontSize: '24px',
-        width: '90%',
-        margin: 'auto'
+        '&:hover':{
+
+        }
     },
     button:{
         float: 'right',
 
-    }
+    },
 };
 
 class wordChip extends Component {
+    state = {
+        currentSynonyms : [],
+        loaded: false
+    }
 
     getTextClass = () => {
         const classes = this.props.classes;
@@ -56,12 +61,39 @@ class wordChip extends Component {
         return (this.props.word + '(' + this.props.frequency + ')');
     }
 
+
     handleIconClick = (wordOnFocus, index) => {
-        this.props.updateWordOnFocus(wordOnFocus);
-        if(this.props.textEditable){
-            this.props.toggleTextEditable();
-        }
-        this.props.updateIndexToExpand(this.props.expanded? -1 : index);
+        this.setState({
+            loaded: false
+        })
+        this.props.toggleTextEditable();
+        let toOpen = this.props.indexToExpand === -1 || this.props.indexToExpand !== this.props.index;
+        if(toOpen){
+            this.props.updateWordOnFocus(wordOnFocus);
+            this.props.updateIndexToExpand(index);
+            console.log(this.props.synonymList);
+            if(this.props.synonymList[this.props.sourceId][wordOnFocus] && 
+                this.props.synonymList[this.props.sourceId][wordOnFocus].length > 0){
+                console.log('here')
+                this.setState({
+                    currentSynonyms: this.props.synonymList[this.props.sourceId][wordOnFocus],
+                    loaded: true
+                })
+            }else{
+                this.props.getSynonymFromSource(wordOnFocus, this.props.sourceId, (response, error) => {
+                    if(response){
+                        this.setState({
+                            currentSynonyms: response,
+                            loaded: true
+                        })
+                    }
+                });
+            }
+            
+        }else{
+            this.props.updateWordOnFocus('');
+            this.props.updateIndexToExpand(-1);
+        }      
     }
 
     render() {
@@ -69,24 +101,31 @@ class wordChip extends Component {
         return (
             <Paper
                 className={classes.card}
-                onClick={() => this.handleIconClick(this.props.word, this.props.index)}
-            >
+            >   
+            <div onClick={() => this.handleIconClick(this.props.word, this.props.index)}>
                 <span style={{lineHeight: '50px'}} className={this.getTextClass()}>{this.getLabel()}</span>
                 <Icon style={{padding: '13px 0', float: 'right'}}>
                     <UnfoldMore/>
                 </Icon>
+            </div>
                 {
-                    this.props.expanded?
-                        <List className={classes.list}>
-                            {words.love.noun.syn.map((word, index) => (
-                                <ListItem key={index}>
-                                    <ListItemText>
-                                        {word}
-                                    </ListItemText>
-                                </ListItem>
+                    this.props.indexToExpand === this.props.index?
+                    <div style={{width: '90%', margin: 'auto', marginTop: '10px'}}>
+                        {this.state.loaded? <List className={classes.list}>
+                            {this.state.currentSynonyms.map((word, index) => (
+                                <CopyToClipboard text={word} onCopy={() =>{/*later add logic to show toast*/}}>
+                                    <Tooltip title='copy to clipboard'>
+                                        <ListItem button key={index}>    
+                                            <ListItemText>
+                                                {word}
+                                            </ListItemText>
+                                        </ListItem>
+                                    </Tooltip>
+                                </CopyToClipboard>
                             ))}
                             
-                        </List> : null
+                            </List> : <div> loader placeholder </div>}
+                    </div>: null
                 }
                 {/* <Button>Go to Source</Button> */}
             </Paper>
@@ -97,14 +136,19 @@ class wordChip extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        textEditable : state.textEditable
+        textEditable : state.editor.textEditable,
+        indexToExpand: state.editor.indexToExpand,
+        sourceId: state.synonym.sourceId,
+        synonymList: state.synonym.synonymList
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateWordOnFocus: (wordOnFocus) => dispatch({ type: actionTypes.UPDATE_WORD_ON_FOCUS, wordOnFocus: wordOnFocus }),
-        toggleTextEditable: () => dispatch({type: actionTypes.TOGGLE_TEXT_EDITABLE}),
+        updateWordOnFocus: (wordOnFocus) => dispatch(actionCreators.updateWordOnFocus(wordOnFocus)),
+        toggleTextEditable: () => dispatch(actionCreators.toggleTextEditable()),
+        getSynonymFromSource: (word, sourceId, callback) => dispatch(actionCreators.getSynonymFromSource(word, sourceId, callback)),
+        updateIndexToExpand: (updatedIndexToExpand) => dispatch(actionCreators.updateIndexToExpand(updatedIndexToExpand))
     }
 }
 

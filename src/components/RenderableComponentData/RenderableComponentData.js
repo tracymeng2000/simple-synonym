@@ -1,4 +1,5 @@
 import {COMPONENT_TYPE, ID} from '../../utility/Constants';
+
 export const settingDialog = [
     {
       type: COMPONENT_TYPE.FORM_CONTROL_LABEL, 
