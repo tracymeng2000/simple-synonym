@@ -11,8 +11,8 @@ export const getSynonymFromSource = (word, sourceId, callback) => {
         axios.get(url)
         .then((response) => {
             console.log(response);
-            console.log(Constants.SOURCE_DATA[sourceId].RESPONSES.SUCCESS);
             if(response.status === Constants.SOURCE_DATA[sourceId].RESPONSES.SUCCESS){
+                console.log('in here')
                 let responseData = convertSynonymData(response.data, sourceId);
                 callback(responseData, null);
                 dispatch({
@@ -20,13 +20,17 @@ export const getSynonymFromSource = (word, sourceId, callback) => {
                     synonymData: responseData,
                     word: word
                 })
+            }else{
+                callback(null, response);
             } 
         })
         .catch((error) => {
-            console.log(error);
+            console.log(null, error);
         })}
     }else{
-        console.log('no internet');
+        return dispatch => {
+            callback(null, Constants.NO_INTERNET);
+        }
     }
     
 }

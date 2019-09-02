@@ -4,7 +4,8 @@ export {
     updateDialogInfo,
     updateSetting,
     updateWordOnFocus,
-    updateIndexToExpand
+    updateIndexToExpand,
+    updateTryAgainFunc
 } from './editorActions'
 
 export {

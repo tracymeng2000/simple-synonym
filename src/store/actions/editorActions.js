@@ -8,8 +8,9 @@ export const storeUserInput = (input) => {
     }
 }
 
-export const  toggleTextEditable = () => {
+export const  toggleTextEditable = (editable) => {
     return {
+        editable: editable,
         type: actionTypes.TOGGLE_TEXT_EDITABLE
     }
 }
@@ -39,5 +40,12 @@ export const updateIndexToExpand = (updatedIndexToExpand) => {
     return {
         type: actionTypes.UPDATE_INDEX_TO_EXPAND,
         updatedIndexToExpand: updatedIndexToExpand
+    }
+}
+
+export const updateTryAgainFunc = (updatedTryAgainFunc) => {
+    return {
+        type: actionTypes.UPDATE_TRY_AGAIN_FUNC,
+        updatedTryAgainFunc: updatedTryAgainFunc
     }
 }

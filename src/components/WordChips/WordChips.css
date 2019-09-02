@@ -1,0 +1,12 @@
+.ul{
+    width: 50%;
+    overflow-y: scroll;
+    padding: 0;
+    align-content: center;
+}
+
+@media (max-width: 680px){
+    .ul{
+        width: 100%;
+    }
+}

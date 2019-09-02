@@ -12,7 +12,7 @@ class TextInput extends Component {
         this.props.storeUserInput(event.target.value)
     }
 
-    findChunksAtDifferentWord = (searchWords, textToHighlight) => {
+    findChunksAtDifferentWord =  (searchWords, textToHighlight) => {
         const chunks = [];
         const singleTextWords = textToHighlight.split(/[/.\s!,.()]/g);
         
@@ -25,7 +25,6 @@ class TextInput extends Component {
                 index: indexInWord
             };
         });
-
         searchWords.forEach(sw => {
             singleTextWordsWithPos.forEach(s => {
               if (s.word === sw || (!this.props.setting.caseSensitive && s.word.toLowerCase() === sw.toLowerCase())) {
@@ -39,6 +38,10 @@ class TextInput extends Component {
         return chunks;
     }
 
+    handleHighlightClick = () => {
+        this.props.toggleTextEditable(true);
+    }
+
     render() {
         return (
             <Aux>
@@ -49,7 +52,7 @@ class TextInput extends Component {
                         onChange={this.handleChange}/>
                 </form>
                 <div className={classes.contentWrapper} style={this.props.textEditable? {display: 'none'} : null}>
-                    <div className={classes.contentArea} onClick={this.props.toggleTextEditable}>
+                    <div className={classes.contentArea} onClick={this.handleHighlightClick}>
                         <Highlighter 
                             textToHighlight={this.props.textToHighlight} 
                             style={{whiteSpace: 'pre-wrap'}} 
@@ -75,7 +78,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         storeUserInput: (input) => dispatch(actionCreators.storeUserInput(input)),
-        toggleTextEditable: () => dispatch(actionCreators.toggleTextEditable())
+        toggleTextEditable: (editable) => dispatch(actionCreators.toggleTextEditable(editable))
     }
 }
 

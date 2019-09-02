@@ -13,7 +13,10 @@ const initialState = {
     wordOnFocus: '',
     textEditable: true,
     dialogInfo: {open: false, dialogTitle: '', components: []},
-    indexToExpand: -1
+    indexToExpand: -1,
+    tryAgainFunc: ()=>{
+        console.log('test')
+    }
 };
 
 const generateWordList = (input, setting) => {
@@ -50,11 +53,8 @@ const updateWordOnFocus = (state, action) => {
 }
 
 const toggleTextEditable = (state, action) => {
-    //if clicking onto the textfield and textEditable is been toggled on,
-    //close card by setting indexToExpand to -1
     return updateObject(state,{
-        textEditable: !state.textEditable,
-        indexToExpand: state.textEditable? state.indexToExpand : -1
+        textEditable: action.editable
     });
 }
 
@@ -77,6 +77,12 @@ const updateIndexToExpand = (state, action) => {
     })
 }
 
+const updateTryAgainFunc = (state, action) => {
+    return updateObject(state, {
+        tryAgainFunc: action.updatedTryAgainFunc
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.STORE_USER_INPUT:
@@ -91,6 +97,8 @@ const reducer = (state = initialState, action) => {
             return updateSetting(state, action);
         case actionTypes.UPDATE_INDEX_TO_EXPAND:
             return updateIndexToExpand(state, action);
+        case actionTypes.UPDATE_TRY_AGAIN_FUNC:
+            return updateTryAgainFunc(state, action);
         default: 
             return state
     }

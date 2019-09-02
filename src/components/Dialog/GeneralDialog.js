@@ -43,12 +43,23 @@ class GeneralDialog extends Component{
     }
 
     handleButtonClick = (id) => {
-        if(id === ID.APPLY_SETTING){
-            this.props.updateSetting({
-                caseSensitive: this.state.caseSensitive,
-                commonWordFilter: this.state.commonWordFilter
-            });
-            this.handleClose();
+        switch(id){
+            case (ID.APPLY_SETTING):
+                this.props.updateSetting({
+                    caseSensitive: this.state.caseSensitive,
+                    commonWordFilter: this.state.commonWordFilter
+                });
+                this.handleClose();
+                break;
+            case (ID.OK):
+                this.handleClose();
+                break;
+            case (ID.TRY_AGAIN):
+                this.props.tryAgainFunc();
+                this.handleClose();
+                break;
+            //implement try again function here later
+            break;
         }
     }
 
@@ -93,6 +104,12 @@ class GeneralDialog extends Component{
                         </Button>
                     )
                     break;
+                case(COMPONENT_TYPE.TEXT):
+                    dialogContent.push(
+                        <text key={dialogComponentIndex}>
+                            {component.config.content}
+                        </text>
+                    )
                 default:
                     //do nothing
             }
@@ -124,14 +141,15 @@ const mapStateToProps = (state) => {
     return {
         dialogInfo : state.editor.dialogInfo,
         caseSensitive: state.editor.setting.caseSensitive,
-        commonWordFilter: state.editor.setting.commonWordFilter
+        commonWordFilter: state.editor.setting.commonWordFilter,
+        tryAgainFunc: state.editor.tryAgainFunc,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateDialogInfo: (updatedDialogInfo) => dispatch(actionCreators.updateDialogInfo(updatedDialogInfo)),
-        updateSetting: (updatedSetting) => dispatch(actionCreators.updateSetting(updatedSetting))
+        updateSetting: (updatedSetting) => dispatch(actionCreators.updateSetting(updatedSetting)),
     }
 }
 

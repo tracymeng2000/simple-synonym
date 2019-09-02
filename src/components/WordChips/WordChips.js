@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import classes from './WordChips.css';
 import WordChip from './WordChip/WordChip';
 
 class WordChips extends Component {
 
     render() {
         return (
-            <ul style={{width: '50%', overflowY: 'scroll', padding: '0', alignContent: 'center'}}>
+            <ul className={classes.ul}>
                 {this.props.wordList.map((item, i) => (
                     <li style={{listStyle: 'none', width: '90%', margin: '9px auto'}} key={i}>
                         <WordChip 

@@ -1,4 +1,4 @@
-import {COMPONENT_TYPE, ID} from '../../utility/Constants';
+import {COMPONENT_TYPE, ID, NO_INTERNET} from '../../utility/Constants';
 
 export const settingDialog = [
     {
@@ -23,3 +23,26 @@ export const settingDialog = [
       }
     }
   ];
+
+export const noInternetErrorDialog = [
+  {
+    type: COMPONENT_TYPE.TEXT,
+    config:{
+      content: NO_INTERNET
+    },
+  },
+  {
+    type: COMPONENT_TYPE.BUTTON,
+    config:{
+      label: 'OK',
+      id: ID.OK
+    }
+  },
+  {
+    type: COMPONENT_TYPE.BUTTON,
+    config:{
+      label: 'Try Again',
+      id: ID.TRY_AGAIN
+    }
+  }
+]

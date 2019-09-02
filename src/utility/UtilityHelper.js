@@ -15,8 +15,8 @@ export const convertSynonymData = (data, sourceId) => {
     switch(sourceId){
         case(Constants.SOURCES.BIG_HUGE_THESAURUS):
             for(let b in data){
-                let synAndSim = data[b].syn.concat(data[b].sim);
-                result = result.concat(synAndSim);
+                let syn = data[b].syn;
+                result = result.concat(syn);
             }
             return result;
         default:
