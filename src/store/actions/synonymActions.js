@@ -12,7 +12,6 @@ export const getSynonymFromSource = (word, sourceId, callback) => {
         .then((response) => {
             console.log(response);
             if(response.status === Constants.SOURCE_DATA[sourceId].RESPONSES.SUCCESS){
-                console.log('in here')
                 let responseData = convertSynonymData(response.data, sourceId);
                 callback(responseData, null);
                 dispatch({
