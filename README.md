@@ -11,7 +11,8 @@ The design and prototype of this app was done using [Figma](https://www.figma.co
 ## Features & Demo
 It quickly spots the repetitive vocabulary in your writing and suggest relevant synonyms. Start enriching your writing simply by pasting or uploading it into Synple!
 
-DEMO: To be updated...
+### Demo:
+![](SynpleScreenshot.gif)
 
 ## Getting Started
 
